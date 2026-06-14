@@ -1,0 +1,45 @@
+body {
+    background: #0f0f0f;
+    color: white;
+    font-family: sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+.menu-btn, .start-btn, .skip-btn, .panel button {
+    width: 80%;
+    padding: 15px;
+    margin: 10px auto;
+    background: #FF4655;
+    border: none;
+    color: white;
+    font-size: 18px;
+    border-radius: 8px;
+}
+
+.panel {
+    margin: 20px 0;
+}
+
+#questionBox {
+    background: #111;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.choice {
+    background: #222;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    cursor: pointer;
+}
