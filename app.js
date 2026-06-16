@@ -280,6 +280,27 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   document.getElementById("start-btn").disabled = false;
 
-  // ★ GitHub Pages ではここで保存するのが安全
   saveRR();
+
+  // ★ note 一覧を表示
+  renderNoteList();
 });
+
+
+function renderNoteList() {
+  const listEl = document.getElementById("note-list");
+  listEl.innerHTML = "<h3>参照した note 一覧</h3>";
+
+  const ul = document.createElement("ul");
+
+  // 重複タイトルをまとめる（同じ note が複数 source にあるため）
+  const uniqueTitles = [...new Set(Object.values(noteTitles))];
+
+  uniqueTitles.forEach(title => {
+    const li = document.createElement("li");
+    li.textContent = title;
+    ul.appendChild(li);
+  });
+
+  listEl.appendChild(ul);
+}
