@@ -369,3 +369,34 @@ h1, h2 {
   margin-bottom: 6px;
   font-size: 14px;
 }
+
+.main-title {
+  text-align: center;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  color: #ECE8E1; /* VALORANTの文字色 */
+}
+
+.main-title .sub {
+  font-size: 0.9em;
+  letter-spacing: 1px;
+}
+
+.main-title .small {
+  font-size: 0.7em;
+  opacity: 0.8;
+}
+
+/* スマホ最適化 */
+@media (max-width: 480px) {
+  .main-title {
+    font-size: 26px;
+  }
+  .main-title .sub {
+    font-size: 20px;
+  }
+  .main-title .small {
+    font-size: 14px;
+  }
+}
