@@ -1,3 +1,6 @@
+// =========================
+// 配列シャッフル
+// =========================
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -72,12 +75,11 @@ const noteTitles = {
 };
 
 // =========================
-// 質問ロード
+// 質問ロード（GitHub Pages対応）
 // =========================
 async function loadQuestions() {
-  const res = await fetch("questions.json");
+  const res = await fetch("./questions.json");  // ← ここが最重要
   questions = await res.json();
-
   shuffle(questions);
 }
 
@@ -111,10 +113,8 @@ function showQuestion() {
 
   const q = quizPool[currentIndex];
 
-  // ★ ここでタイトルを毎回更新する
-  const currentSource = q.source;
   document.getElementById("quiz-title").textContent =
-    noteTitles[currentSource] || "VALORANT 戦術クイズ";
+    noteTitles[q.source] || "VALORANT 戦術クイズ";
 
   document.getElementById("progress").textContent =
     `問題 ${currentIndex + 1} / ${totalQuestions}`;
@@ -166,26 +166,21 @@ function updateRRBar() {
 }
 
 // =========================
-// ランクアップ演出
+// ランク変動演出
 // =========================
 function playRankUpAnimation(newRank) {
   const anim = document.createElement("div");
   anim.className = "rank-up-anim";
   anim.innerHTML = `RANK UP!<br>${newRank}`;
   document.body.appendChild(anim);
-
   setTimeout(() => anim.remove(), 5000);
 }
 
-// =========================
-// ランクダウン演出
-// =========================
 function playRankDownAnimation(newRank) {
   const anim = document.createElement("div");
   anim.className = "rank-down-anim";
   anim.innerHTML = `RANK DOWN...<br>${newRank}`;
   document.body.appendChild(anim);
-
   setTimeout(() => anim.remove(), 5000);
 }
 
@@ -197,21 +192,14 @@ function checkRankChange() {
 
   const currentRank = currentRankInfo.name;
 
-  // ランクのインデックスを取得
   const prevIndex = rankData.findIndex(r => r.name === previousRank);
   const currIndex = rankData.findIndex(r => r.name === currentRank);
 
-  if (currIndex > prevIndex) {
-    // ★ ランクアップ
-    playRankUpAnimation(currentRank);
-  } else if (currIndex < prevIndex) {
-    // ★ ランクダウン
-    playRankDownAnimation(currentRank);
-  }
+  if (currIndex > prevIndex) playRankUpAnimation(currentRank);
+  else if (currIndex < prevIndex) playRankDownAnimation(currentRank);
 
   previousRank = currentRank;
 }
-
 
 // =========================
 // 回答処理
@@ -282,16 +270,16 @@ function loadRR() {
   if (saved !== null) rr = Number(saved);
 }
 
-saveRR();
-
 // =========================
-// 初期ロード（1回だけ）
+// 初期ロード（GitHub Pages対応）
 // =========================
 window.addEventListener("DOMContentLoaded", async () => {
   await loadQuestions();
   loadRR();
   updateRRBar();
 
-  // 読み込み完了後にスタートボタンを有効化
   document.getElementById("start-btn").disabled = false;
+
+  // ★ GitHub Pages ではここで保存するのが安全
+  saveRR();
 });
