@@ -270,6 +270,9 @@ function saveRR() {
 function loadRR() {
   const saved = localStorage.getItem("valorant_rr");
   if (saved !== null) rr = Number(saved);
+
+  // ★ 読み込んだ RR に合わせて previousRank を再設定
+  previousRank = getRankInfo(rr).name;
 }
 
 // =========================
