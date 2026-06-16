@@ -264,14 +264,13 @@ document.getElementById("back-home-btn").onclick = () => {
 // RR保存
 // =========================
 function saveRR() {
-  localStorage.setItem("valorant_rr", rr);
+  localStorage.setItem("valorant_rr", JSON.stringify(rr));
 }
 
 function loadRR() {
   const saved = localStorage.getItem("valorant_rr");
-  if (saved !== null) rr = Number(saved);
+  if (saved !== null) rr = Number(JSON.parse(saved));
 
-  // ★ 読み込んだ RR に合わせて previousRank を再設定
   previousRank = getRankInfo(rr).name;
 }
 
