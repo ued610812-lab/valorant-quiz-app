@@ -4,76 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VALORANT 戦術クイズ</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
+    
 </head>
 <body>
-
-    <!-- ホーム画面 -->
-    <div id="home" class="screen active">
-        <h1>VALORANT 戦術クイズ</h1>
-
-        <button class="menu-btn" onclick="startCategory('tactics')">
-            戦術判断クイズ
-        </button>
-
-        <button class="menu-btn" onclick="startCategory('agent')">
-            エージェント知識クイズ
-        </button>
-
-        <button class="menu-btn" onclick="startCategory('map')">
-            マップ別クイズ
-        </button>
-
-        <div class="footer-btns">
-            <button onclick="startDaily()">今日の1問</button>
-            <button onclick="showRanking()">ランキング</button>
-        </div>
+    <div id="rr-bar">
+      <div id="rr-fill"></div>
+    </div>
+    
+    <div id="rank-display">
+        <img id="rank-icon" src="">
+        <span id="rank-name"></span>
     </div>
 
-    <!-- クイズ選択画面 -->
-    <div id="select" class="screen">
-        <h2 id="categoryTitle"></h2>
 
-        <div class="panel">
-            <h3>難易度</h3>
-            <button onclick="setDifficulty('easy')">EASY</button>
-            <button onclick="setDifficulty('normal')">NORMAL</button>
-            <button onclick="setDifficulty('hard')">HARD</button>
-        </div>
+    <button class="home-icon-btn">
+        <span class="icon">⟵</span> HOME
+    </button>
 
-        <div class="panel">
-            <h3>出題数</h3>
-            <button onclick="setCount(5)">5問</button>
-            <button onclick="setCount(10)">10問</button>
-            <button onclick="setCount('infinite')">∞ 無限</button>
-        </div>
-
-        <button class="start-btn" onclick="startQuiz()">クイズを開始</button>
+  <!-- ホーム画面 -->
+  <div id="home-screen" class="screen active">
+    <div class="title-box">
+      <h1>VALORANT 戦術クイズ</h1>
     </div>
 
-    <!-- クイズ画面 -->
-    <div id="quiz" class="screen">
-        <div id="progress"></div>
-        <div id="questionBox"></div>
-        <div id="choices"></div>
-        <button class="skip-btn" onclick="nextQuestion()">スキップ</button>
+    <button id="start-btn" class="start-btn">スタート</button>
+  </div>
+
+  <!-- 問題数選択画面 -->
+  <div id="select-count-screen" class="screen">
+    <h2>問題数を選択</h2>
+
+    <button class="menu-btn count-btn" data-count="10">10問</button>
+    <button class="menu-btn count-btn" data-count="20">20問</button>
+    <button class="menu-btn count-btn" data-count="30">30問</button>
+    <button class="menu-btn count-btn" data-count="50">50問</button>
+    <button class="menu-btn count-btn" data-count="all">全部</button>
+  </div>
+
+  <!-- クイズ画面 -->
+  <div id="quiz-screen" class="screen">
+    <div id="quiz-title" class="quiz-title"></div>
+    <div id="progress"></div>
+    <div id="questionBox">
+        <div class="label">QUESTION</div>
+        <div id="questionText"></div>
+    </div>
+    <div id="choices"></div>
+    <div id="judge"></div>
+    <div id="explanation"></div>
+
+    <button id="next-btn" class="skip-btn">次へ</button>
+  </div>
+
+    <!-- リザルト画面 -->
+    <div id="result-screen" class="screen">
+        <h2>リザルト</h2>
+
+        <div id="result-rr" class="result-box"></div>
+        <div id="result-rank" class="result-box"></div>
+
+        <button id="back-home-btn" class="start-btn">ホームに戻る</button>
     </div>
 
-    <!-- 解説画面 -->
-    <div id="result" class="screen">
-        <h2 id="judge"></h2>
-        <div id="explanation"></div>
-        <button onclick="nextQuestion()">次の問題へ</button>
-    </div>
-
-    <!-- 最終結果画面 -->
-    <div id="final" class="screen">
-        <h2 id="score"></h2>
-        <div id="review"></div>
-        <button onclick="restart()">もう一度遊ぶ</button>
-        <button onclick="goHome()">ホームへ戻る</button>
-    </div>
-
-    <script src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

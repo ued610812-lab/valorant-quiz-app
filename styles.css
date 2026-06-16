@@ -1,45 +1,339 @@
+/* ------------------------------
+   ベース設定
+------------------------------ */
 body {
-    background: #0f0f0f;
-    color: white;
-    font-family: sans-serif;
+    margin: 0;
+    background: repeating-linear-gradient(
+        -45deg,
+        #0F1923,
+        #0F1923 10px,
+        #0D141C 10px,
+        #0D141C 20px
+    );
+    color: #ECE8E1;
+    font-family: 'Montserrat', system-ui, sans-serif;
     text-align: center;
-    padding: 20px;
 }
 
+/* ------------------------------
+   画面コンテナ
+------------------------------ */
 .screen {
     display: none;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 24px;
+    border: 1px solid #2A2E31;
+    background: rgba(15, 25, 35, 0.95);
+    box-shadow: 0 0 30px rgba(0,0,0,0.6);
+    animation: fadeIn 0.25s ease-out;
 }
 
 .screen.active {
     display: block;
 }
 
-.menu-btn, .start-btn, .skip-btn, .panel button {
-    width: 80%;
-    padding: 15px;
-    margin: 10px auto;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ------------------------------
+   タイトル
+------------------------------ */
+h1, h2 {
+    font-family: 'Bebas Neue', 'Oswald', sans-serif;
+    letter-spacing: 2px;
+    color: #FF4655;
+    margin-bottom: 16px;
+}
+
+/* ------------------------------
+   VALORANTロビー風タイトルパネル
+------------------------------ */
+.title-box {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 30px;
+    padding: 40px 0 30px;
+    background: rgba(15, 25, 35, 0.85);
+    border: 2px solid #FF4655;
+    clip-path: polygon(0 0, 100% 0, 98% 100%, 0 100%);
+    box-shadow: 0 0 25px rgba(0,0,0,0.6);
+}
+
+.title-box h1 {
+    font-size: 46px;
+    letter-spacing: 3px;
+    margin: 0;
+    color: #ECE8E1;
+}
+
+.title-box::after {
+    content: "";
+    position: absolute;
+    bottom: 12px;
+    left: 20px;
+    width: calc(100% - 40px);
+    height: 3px;
     background: #FF4655;
-    border: none;
-    color: white;
+    opacity: 0.8;
+}
+
+/* ------------------------------
+   ボタン（VALORANT風）
+------------------------------ */
+.menu-btn,
+.start-btn,
+.skip-btn {
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: 360px;
+    margin: 10px auto;
+    padding: 12px 18px;
+    background: transparent;
+    border: 2px solid #FF4655;
+    color: #ECE8E1;
+    font-family: 'Bebas Neue', sans-serif;
     font-size: 18px;
-    border-radius: 8px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    transition: background 0.2s ease, transform 0.15s ease;
 }
 
-.panel {
-    margin: 20px 0;
+.menu-btn::after,
+.start-btn::after,
+.skip-btn::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: #FF4655;
+    transition: width 0.25s ease-out;
 }
 
+.menu-btn:hover,
+.start-btn:hover,
+.skip-btn:hover {
+    background: #FF4655;
+    transform: scale(1.03);
+}
+
+.menu-btn:hover::after,
+.start-btn:hover::after,
+.skip-btn:hover::after {
+    width: 100%;
+}
+
+/* ------------------------------
+   ホームボタン（右上固定）
+------------------------------ */
+.home-icon-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 8px 14px 8px 10px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid #ECE8E1;
+    color: #ECE8E1;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    z-index: 999;
+    clip-path: polygon(0 0, 100% 0, 98% 100%, 0 100%);
+    transition: 0.2s ease;
+}
+
+.home-icon-btn .icon {
+    font-size: 16px;
+    color: #FF4655;
+    font-weight: bold;
+}
+
+.home-icon-btn:hover {
+    background: rgba(255,70,85,0.15);
+    border-color: #FF4655;
+}
+
+.home-icon-btn::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    background: #FF4655;
+    transition: width 0.25s ease-out;
+}
+
+.home-icon-btn:hover::after {
+    width: 100%;
+}
+
+/* ------------------------------
+   問題カード
+------------------------------ */
 #questionBox {
-    background: #111;
-    padding: 20px;
-    border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06); /* ← ほんのり明るい */
+  padding: 16px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #ECE8E1;
+}
+
+
+
+/* ------------------------------
+   選択肢
+------------------------------ */
+.choice {
+    background: #1A222C;
+    padding: 12px 14px;
+    margin: 8px 0;
+    border: 2px solid #FF4655;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+    transition: background 0.15s ease, transform 0.12s ease;
+}
+
+.choice:hover {
+    background: #FF4655;
+    border-color: #ECE8E1;
+    transform: scale(1.02);
+}
+
+.choice.active {
+    background: #FF4655;
+    border-color: #ECE8E1;
+}
+
+/* ------------------------------
+   解説カード
+------------------------------ */
+#explanation {
+    display: none;
+    background: #111820;
+    padding: 18px;
+    border: 2px solid #BD3944;
+    border-radius: 4px;
+    margin: 16px 0;
+    text-align: left;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* ------------------------------
+   判定表示
+------------------------------ */
+#judge {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+/* ------------------------------
+   RRバー & ランク表示
+------------------------------ */
+#rr-bar {
+    width: 100%;
+    height: 12px;
+    background: #222;
+    border: 1px solid #555;
+    margin-bottom: 10px;
+}
+
+#rr-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #FF4655, #BD3944);
+    transition: width 0.3s ease;
+}
+
+#rank-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     margin-bottom: 20px;
 }
 
-.choice {
-    background: #222;
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 8px;
-    cursor: pointer;
+#rank-display img {
+    width: 40px;
+    height: 40px;
 }
+
+/* ------------------------------
+   ランクアップ演出
+------------------------------ */
+.rank-up-anim {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 48px;
+  font-weight: 900;
+  color: #FFD700; /* ← 金色っぽい黄色 */
+  text-shadow: 0 0 10px #FFD700;
+  animation: fadeOut 2s forwards;
+  z-index: 9999;
+}
+
+.rank-down-anim {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 48px;
+  font-weight: 900;
+  color: #4DA6FF; /* 青 */
+  text-shadow: 0 0 10px #4DA6FF;
+  animation: fadeOut 2s forwards;
+  z-index: 9999;
+}
+
+@keyframes pop {
+    0% { opacity: 0; transform: scale(0.5) translate(-50%, -50%); }
+    20% { opacity: 1; transform: scale(1.2) translate(-50%, -50%); }
+    100% { opacity: 0; transform: scale(1) translate(-50%, -50%); }
+}
+
+.result-box {
+  background: #111820;
+  padding: 18px;
+  border: 2px solid #BD3944;
+  border-radius: 4px;
+  margin: 16px 0;
+  font-size: 18px;
+}
+
+.quiz-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  text-align: center;
+  color: #fff;
+}
+
+#progress {
+  position: relative;
+  top: -12px; /* 上に移動 */
+}
+
+.label {
+  font-size: 12px;
+  color: #FF4655;
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+}
+
