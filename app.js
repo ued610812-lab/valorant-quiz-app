@@ -147,6 +147,8 @@ let streak = 0;
 function applyRR(isCorrect) {
   rr += isCorrect ? 20 : -20;
   rr = Math.max(0, Math.min(rr, 1000));
+
+  saveRR(); // ← これが超重要
 }
 
 // =========================
