@@ -1,6 +1,6 @@
-// =========================
-// 配列シャッフル
-// =========================
+/* ==========================================================
+   UTILITY: 配列シャッフル
+========================================================== */
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -9,46 +9,29 @@ function shuffle(array) {
   return array;
 }
 
-// =========================
-// 画面切り替え
-// =========================
+/* ==========================================================
+   SCREEN CONTROL: 画面切り替え
+========================================================== */
 function showScreen(id) {
   document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
 }
 
-// =========================
-// ボタンイベント
-// =========================
-document.getElementById("start-btn").onclick = () => {
-  showScreen("select-count-screen");
-};
-
-document.querySelectorAll(".count-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const count = btn.dataset.count;
-    startQuiz(count);
-  });
-});
-
-document.querySelectorAll(".home-icon-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    showScreen("home-screen");
-  });
-});
-
-// =========================
-// クイズ用変数
-// =========================
+/* ==========================================================
+   GLOBAL STATE
+========================================================== */
 let questions = [];
 let quizPool = [];
 let currentIndex = 0;
 let totalQuestions = 0;
 let answered = false;
 
-// =========================
-// ランクデータ
-// =========================
+let rr = 0;
+let previousRank = null;
+
+/* ==========================================================
+   RANK DATA
+========================================================== */
 const rankData = [
   { name: "アイアン",     min: 0,   max: 99,  icon: "icons/iron.webp" },
   { name: "ブロンズ",     min: 100, max: 199, icon: "icons/bronze.webp" },
@@ -65,27 +48,27 @@ function getRankInfo(rr) {
   return rankData.find(r => rr >= r.min && rr <= r.max);
 }
 
-// =========================
-// タイトル辞書
-// =========================
+/* ==========================================================
+   TITLE DICTIONARY
+========================================================== */
 const noteTitles = {
   "skill_usage": "スキルの考え方",
   "skill_usage_note": "スキルの考え方",
   "lurk_note": "ラークをする時、私には３つの人格が宿るのだ"
 };
 
-// =========================
-// 質問ロード（GitHub Pages対応）
-// =========================
+/* ==========================================================
+   LOAD QUESTIONS (GitHub Pages 対応)
+========================================================== */
 async function loadQuestions() {
-  const res = await fetch("./questions.json");  // ← ここが最重要
+  const res = await fetch("./questions.json");
   questions = await res.json();
   shuffle(questions);
 }
 
-// =========================
-// クイズ開始
-// =========================
+/* ==========================================================
+   QUIZ START
+========================================================== */
 function startQuiz(count) {
   if (questions.length === 0) {
     alert("問題データを読み込み中です。少し待ってください。");
@@ -105,9 +88,9 @@ function startQuiz(count) {
   showQuestion();
 }
 
-// =========================
-// 問題表示
-// =========================
+/* ==========================================================
+   SHOW QUESTION
+========================================================== */
 function showQuestion() {
   answered = false;
 
@@ -138,22 +121,16 @@ function showQuestion() {
   exp.innerHTML = "";
 }
 
-// =========================
-// RR計算
-// =========================
-let rr = 0;
-let streak = 0;
-
+/* ==========================================================
+   RR SYSTEM
+========================================================== */
 function applyRR(isCorrect) {
   rr += isCorrect ? 20 : -20;
   rr = Math.max(0, Math.min(rr, 1000));
 
-  saveRR(); // ← これが超重要
+  saveRR();
 }
 
-// =========================
-// RRバー更新
-// =========================
 function updateRRBar() {
   const rank = getRankInfo(rr);
   if (!rank) return;
@@ -167,15 +144,15 @@ function updateRRBar() {
   document.getElementById("rank-name").textContent = rank.name;
 }
 
-// =========================
-// ランク変動演出
-// =========================
+/* ==========================================================
+   RANK ANIMATION
+========================================================== */
 function playRankUpAnimation(newRank) {
   const anim = document.createElement("div");
   anim.className = "rank-up-anim";
   anim.innerHTML = `RANK UP!<br>${newRank}`;
   document.body.appendChild(anim);
-  setTimeout(() => anim.remove(), 5000);
+  setTimeout(() => anim.remove(), 2000);
 }
 
 function playRankDownAnimation(newRank) {
@@ -183,10 +160,8 @@ function playRankDownAnimation(newRank) {
   anim.className = "rank-down-anim";
   anim.innerHTML = `RANK DOWN...<br>${newRank}`;
   document.body.appendChild(anim);
-  setTimeout(() => anim.remove(), 5000);
+  setTimeout(() => anim.remove(), 2000);
 }
-
-let previousRank = getRankInfo(rr).name;
 
 function checkRankChange() {
   const currentRankInfo = getRankInfo(rr);
@@ -194,18 +169,20 @@ function checkRankChange() {
 
   const currentRank = currentRankInfo.name;
 
-  const prevIndex = rankData.findIndex(r => r.name === previousRank);
-  const currIndex = rankData.findIndex(r => r.name === currentRank);
+  if (previousRank) {
+    const prevIndex = rankData.findIndex(r => r.name === previousRank);
+    const currIndex = rankData.findIndex(r => r.name === currentRank);
 
-  if (currIndex > prevIndex) playRankUpAnimation(currentRank);
-  else if (currIndex < prevIndex) playRankDownAnimation(currentRank);
+    if (currIndex > prevIndex) playRankUpAnimation(currentRank);
+    else if (currIndex < prevIndex) playRankDownAnimation(currentRank);
+  }
 
   previousRank = currentRank;
 }
 
-// =========================
-// 回答処理
-// =========================
+/* ==========================================================
+   ANSWER CHECK
+========================================================== */
 function checkAnswer(selected) {
   if (answered) return;
   answered = true;
@@ -229,9 +206,9 @@ function checkAnswer(selected) {
   checkRankChange();
 }
 
-// =========================
-// 次へ
-// =========================
+/* ==========================================================
+   NEXT BUTTON
+========================================================== */
 document.getElementById("next-btn").onclick = () => {
   if (!answered) {
     document.getElementById("judge").textContent = "※ 回答してください";
@@ -253,16 +230,16 @@ document.getElementById("next-btn").onclick = () => {
   }
 };
 
-// =========================
-// ホームへ戻る
-// =========================
+/* ==========================================================
+   HOME BUTTON
+========================================================== */
 document.getElementById("back-home-btn").onclick = () => {
   showScreen("home-screen");
 };
 
-// =========================
-// RR保存
-// =========================
+/* ==========================================================
+   RR SAVE / LOAD (スマホ対応)
+========================================================== */
 function saveRR() {
   localStorage.setItem("valorant_rr", JSON.stringify(rr));
 }
@@ -274,9 +251,9 @@ function loadRR() {
   previousRank = getRankInfo(rr).name;
 }
 
-// =========================
-// 初期ロード（GitHub Pages対応）
-// =========================
+/* ==========================================================
+   INITIAL LOAD
+========================================================== */
 window.addEventListener("DOMContentLoaded", async () => {
   await loadQuestions();
   loadRR();
@@ -284,18 +261,17 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   document.getElementById("start-btn").disabled = false;
 
-  // ★ note 一覧を表示
   renderNoteList();
 });
 
-
+/* ==========================================================
+   NOTE LIST
+========================================================== */
 function renderNoteList() {
   const listEl = document.getElementById("note-list");
   listEl.innerHTML = "<h3>参照した note 一覧</h3>";
 
   const ul = document.createElement("ul");
-
-  // 重複タイトルをまとめる（同じ note が複数 source にあるため）
   const uniqueTitles = [...new Set(Object.values(noteTitles))];
 
   uniqueTitles.forEach(title => {
@@ -306,3 +282,23 @@ function renderNoteList() {
 
   listEl.appendChild(ul);
 }
+
+/* ==========================================================
+   BUTTON EVENTS
+========================================================== */
+document.getElementById("start-btn").onclick = () => {
+  showScreen("select-count-screen");
+};
+
+document.querySelectorAll(".count-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const count = btn.dataset.count;
+    startQuiz(count);
+  });
+});
+
+document.querySelectorAll(".home-icon-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    showScreen("home-screen");
+  });
+});

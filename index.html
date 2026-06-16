@@ -1,78 +1,104 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VALORANTクイズ – Based on Ishida’s Notes</title>
-    <link rel="stylesheet" href="./styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VALORANT Quiz – Based on Ishida’s Notes</title>
+  <link rel="stylesheet" href="./styles.css">
 </head>
+
 <body>
+
+  <!-- ===============================
+       ランクバー & ランク表示
+  =============================== -->
+  <header>
     <div id="rr-bar">
       <div id="rr-fill"></div>
     </div>
-    
+
     <div id="rank-display">
-        <img id="rank-icon" src="">
-        <span id="rank-name"></span>
+      <img id="rank-icon" src="" alt="rank icon">
+      <span id="rank-name"></span>
     </div>
 
     <button class="home-icon-btn">
-        <span class="icon">⟵</span> HOME
+      <span class="icon">⟵</span> HOME
     </button>
+  </header>
 
-<!-- ホーム画面 -->
-<div id="home-screen" class="screen active">
-  <div class="title-box">
-    <h1 class="main-title">
-      VALORANT<br>
-      <span class="sub">Quiz</span><br>
-      <span class="small">– Based on Ishida’s Notes</span>
-    </h1>
-  </div>
+  <main>
 
-  <button id="start-btn" class="start-btn">スタート</button>
+    <!-- ===============================
+         ホーム画面
+    =============================== -->
+    <section id="home-screen" class="screen active">
 
-  <!-- ★ 参照した note 一覧 -->
-  <div id="note-list" class="note-list"></div>
-</div>
+      <div class="title-box">
+        <h1 class="main-title">
+          VALORANT<br>
+          <span class="sub">Quiz</span><br>
+          <span class="small">– Based on Ishida’s Notes</span>
+        </h1>
+      </div>
 
-  <!-- 問題数選択画面 -->
-  <div id="select-count-screen" class="screen">
-    <h2>問題数を選択</h2>
+      <button id="start-btn" class="start-btn">スタート</button>
 
-    <button class="menu-btn count-btn" data-count="10">10問</button>
-    <button class="menu-btn count-btn" data-count="20">20問</button>
-    <button class="menu-btn count-btn" data-count="30">30問</button>
-    <button class="menu-btn count-btn" data-count="50">50問</button>
-    <button class="menu-btn count-btn" data-count="all">全部</button>
-  </div>
+      <!-- 参照した note 一覧 -->
+      <div id="note-list" class="note-list"></div>
+    </section>
 
-  <!-- クイズ画面 -->
-  <div id="quiz-screen" class="screen">
-    <div id="quiz-title" class="quiz-title"></div>
-    <div id="progress"></div>
-    <div id="questionBox">
+    <!-- ===============================
+         問題数選択画面
+    =============================== -->
+    <section id="select-count-screen" class="screen">
+      <h2>問題数を選択</h2>
+
+      <button class="menu-btn count-btn" data-count="10">10問</button>
+      <button class="menu-btn count-btn" data-count="20">20問</button>
+      <button class="menu-btn count-btn" data-count="30">30問</button>
+      <button class="menu-btn count-btn" data-count="50">50問</button>
+      <button class="menu-btn count-btn" data-count="all">全部</button>
+    </section>
+
+    <!-- ===============================
+         クイズ画面
+    =============================== -->
+    <section id="quiz-screen" class="screen">
+
+      <div id="quiz-title" class="quiz-title"></div>
+      <div id="progress"></div>
+
+      <div id="questionBox">
         <div class="label">QUESTION</div>
         <div id="questionText"></div>
-    </div>
-    <div id="choices"></div>
-    <div id="judge"></div>
-    <div id="explanation"></div>
+      </div>
 
-    <button id="next-btn" class="skip-btn">次へ</button>
-  </div>
+      <div id="choices"></div>
+      <div id="judge"></div>
+      <div id="explanation"></div>
 
-    <!-- リザルト画面 -->
-    <div id="result-screen" class="screen">
-        <h2>リザルト</h2>
+      <button id="next-btn" class="skip-btn">次へ</button>
+    </section>
 
-        <div id="result-rr" class="result-box"></div>
-        <div id="result-rank" class="result-box"></div>
+    <!-- ===============================
+         リザルト画面
+    =============================== -->
+    <section id="result-screen" class="screen">
+      <h2>リザルト</h2>
 
-        <button id="back-home-btn" class="start-btn">ホームに戻る</button>
-    </div>
+      <div id="result-rr" class="result-box"></div>
+      <div id="result-rank" class="result-box"></div>
 
-<!-- 🔥 GitHub Pages で確実に動くように修正 -->
-<script src="./app.js"></script>
+      <button id="back-home-btn" class="start-btn">ホームに戻る</button>
+    </section>
+
+  </main>
+
+  <!-- ===============================
+       JavaScript
+  =============================== -->
+  <script src="./app.js"></script>
+
 </body>
 </html>
