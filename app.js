@@ -282,8 +282,6 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   document.getElementById("start-btn").disabled = false;
 
-  saveRR();
-
   // ★ note 一覧を表示
   renderNoteList();
 });
